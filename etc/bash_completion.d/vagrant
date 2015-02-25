@@ -109,6 +109,11 @@ _vagrant() {
                 COMPREPLY=($(compgen -W "${snapshot_commands}" -- ${cur}))
                 return 0
                 ;;
+            "package")
+                package_options="--base --output --include --vagrantfile"
+                COMPREPLY=($(compgen -W "${package_options}" -- ${cur}))
+                return 0
+                ;;
             *)
             ;;
         esac
@@ -131,6 +136,10 @@ _vagrant() {
                       COMPREPLY=($(compgen -W "${box_list}" -- ${cur}))
                       return 0
                       ;;
+                  "add")
+                      _filedir
+                      return 0
+                      ;;
                   *)
               esac
               ;;
@@ -141,6 +150,11 @@ _vagrant() {
                   return 0
               fi
               ;;
+          "package")
+              if [ "$prev" == "--output" ] || [ "$prev" == "--include" ] || [ "$prev" == "--vagrantfile" ]; then
+                  _filedir
+                  return 0
+              fi
       esac
     fi
 }
